@@ -1,1 +1,7 @@
 Javascript coding questions
+
+1. Palindrome Number
+2. Fibonacci Number
+3. Valid Anagram
+4. Two Sum
+5. Best Time to Sell Stocks
