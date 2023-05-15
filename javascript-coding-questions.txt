@@ -5,3 +5,119 @@ Javascript coding questions
 3. Valid Anagram
 4. Two Sum
 5. Best Time to Sell Stocks
+
+
+Everything except the primitive datatype is an object
+Primitive datatype - 
+    string, boolean, null, undefined, number, symbol
+
+for example,
+var a = 3
+var b = 3
+var c = b
+c would be 3 as it points to 3 in the memory but if we talk about object then the case would be different as for every thing we create a new object
+
+const obj1 = {id:1}
+const obj2 = {id:1}
+obj1 === obj2  => this would be returning false
+it checks if both are pointing to the same place in the memory 
+
+Some Javascript Methods
+1. map() - returns new array
+2. filter() - returns new array, returns the element accordingly to the condition specified
+3. reduce() - function often used when we want to do two things like
+    a:) with some value at the end
+    b:) when we want to persist the array elements
+example :
+const array = [1,2,3,4,5]
+array.reduce((accumulator,currentElement) => accumulator + currentElement , 0)
+
+4. find() - finds and return the value
+5. includes() - (return boolean value) - check if a element is present inside the array
+
+Promises - Handling aynchronous actions introduced in ES6
+Before promises, 
+
+const myPromise = new Promise((resolve,reject) =>{
+    setTimeout(()=>{
+        resolve("I have succeeded)
+    },1000)
+})
+
+myPromise.then(value => console.log(value))
+
+resolve - when our api call is successful 
+reject - when unsuccessful gets an error 
+but the promise will be in a state where it is pending until either the reject or resolve have been called
+
+const myPromise = new Promise((resolve,reject) =>{
+    if(true){
+        setTimeout(()=>{
+        resolve("I have succeeded)
+    },1000)
+    }else{
+        reject("I have failed)
+    }
+})
+
+myPromise
+    .then(value => console.log(value))
+    .catch(rejectValue => console.log(rejectValue))
+
+with this promise we are getting the control over the asynchronous events
+
+fetch returns a promise
+
+fetch("url")
+    .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(error => console.log(error))
+
+In ES7, a new feature called async/await was introduced to handle how we write our asynchronous code 
+
+async/await ->  lets you handle synchronous code asynchronously 
+
+for example
+
+One way to write the code
+fetch("url")
+    .then(res => res.json())
+    .then(users =>{
+        const firstUser = users[0]
+        console.log(firstUser)
+        return fetch("another url" + firstUser.id)
+    })
+    .then(res => res.json())
+    .then(posts => console.log(posts))
+    .catch(error => console.log(error))
+
+
+dealing promises with async/await
+const myAsyncFunction = async () => {
+    const userResponse = await fetch("url")
+    const users = await userResponse.json()
+    const secondUser = users[0]
+
+    console.log(secondUser)
+
+    const postsResponse = await fetch("another url"+secondUser.id)
+    const posts = await postsResponse.json()
+    console.log(posts)
+}
+
+now if we talk about error handling with async/await -> we use try/catch block
+const myAsyncFunction = async () => {
+    try{
+        const userResponse = await fetch("url")
+        const users = await userResponse.json()
+        const secondUser = users[0]
+
+        console.log(secondUser)
+
+        const postsResponse = await fetch("another url"+secondUser.id)
+        const posts = await postsResponse.json()
+        console.log(posts)
+    }catch(error){
+        console.log(error)
+    }
+}
